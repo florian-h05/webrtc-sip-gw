@@ -13,7 +13,7 @@ push:
 	docker push $(IMAGE)
 
 run:
-	sudo docker run --rm -d --network host --name webrtc-gw webrtc-gw:latest
+	docker run --rm -d --network host --name webrtc-gw webrtc-gw:latest
 
 stop:
 	docker container stop webrtc-gw
