@@ -7,5 +7,6 @@ MY_IP=`hostname -I | awk '{print $1}'`
 sed -i -e "s/MY_IP/$MY_IP/g" /etc/rtpengine/rtpengine.conf
 sed -i -e "s/FILL_MY_IP/$MY_IP/g" /etc/kamailio/kamailio.cfg
 
-exec $@
+sed -i -e "s/FILL_MY_DOMAIN/${MY_DOMAIN}/g" /etc/kamailio/kamailio.cfg
 
+exec $@
