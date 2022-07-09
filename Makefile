@@ -1,23 +1,21 @@
 BUILD   ?= $(shell date +%Y%m%d%H%M)
-VERSION := 0.0.1-$(BUILD)
-IMAGE   := nanosonde/webrtc-gw
-
-.PHONY: all build push
-all: build push
+VERSION := 1.0.0-$(BUILD)
+IMAGE   := florian-h05/webrtc-sip-gw
 
 build:
 	docker buildx build --platform linux/amd64 -t $(IMAGE):latest -t $(IMAGE):$(VERSION) --rm .
-	#docker build -t 'webrtc-gw:latest' --rm .
 
 push:
 	docker push $(IMAGE)
 
 run:
-	docker run --rm -d --network host --name webrtc-gw nanosonde/webrtc-gw:latest
+	docker run --rm -d --network host --name webrtc-sip-gw florian-h05/webrtc-sip-gw:latest
 
 stop:
-	docker container stop webrtc-gw
+	docker container stop webrtc-sip-gw
 
 login:
-	docker exec -it webrtc-gw /bin/bash
+	docker exec -it webrtc-sip-gw /bin/bash
 
+logs:
+	docker logs --follow webrtc-sip-gw
