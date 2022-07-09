@@ -6,7 +6,7 @@ IMAGE   := nanosonde/webrtc-gw
 all: build push
 
 build:
-	docker buildx build --push --platform linux/amd64 -t $(IMAGE):latest -t $(IMAGE):$(VERSION) --rm .
+	docker buildx build --platform linux/amd64 -t $(IMAGE):latest -t $(IMAGE):$(VERSION) --rm .
 	#docker build -t 'webrtc-gw:latest' --rm .
 
 push:
