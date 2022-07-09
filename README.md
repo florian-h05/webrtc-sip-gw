@@ -10,6 +10,20 @@ No configuration is required.
 
 ## How to use?
 
+It is recommended to use the following *docker-compose.yml* file:
+
+```yaml
+version: "3.3"
+
+services:
+  webrtc-sip-gw:
+    image: ghcr.io/florian-h05/webrtc-sip-gw
+    restart: always
+    network_mode: host
+```
+
+## Development
+
 Clone this repository, then use the available `sudo make` commands:
 - `build`: Builds the container image.
 - `push`: Push to the container registry.
