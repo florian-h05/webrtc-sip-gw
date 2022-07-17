@@ -8,7 +8,7 @@ RUN \
  && wget -q -O - https://deb.sipwise.com/spce/keyring/sipwise-keyring-bootstrap.gpg | apt-key add - \
  && apt-get update \
  && apt-get install -y --no-install-recommends ngcp-rtpengine \
- && apt-get install -y --no-install-recommends kamailio kamailio-websocket-modules
+ && apt-get install -y --no-install-recommends kamailio kamailio-websocket-modules kamailio-tls-modules
 
 VOLUME ["/tmp"]
 
