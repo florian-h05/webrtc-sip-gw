@@ -23,7 +23,7 @@ services:
     network_mode: host
     volumes:
      - ./ssl/private.key:/etc/ssl/privkey.pem:ro
-     - ./ssl/cert.pem:/etc/ssl/cert.pem:ro
+     - ./ssl/cert.pem:/etc/ssl/fullchain.pem:ro
 ```
 
 ## Development
