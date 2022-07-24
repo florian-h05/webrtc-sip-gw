@@ -18,6 +18,7 @@ version: "3.3"
 
 services:
   webrtc-sip-gw:
+    name: webrtc-sip-gw
     image: ghcr.io/florian-h05/webrtc-sip-gw
     restart: always
     network_mode: host
