@@ -1,9 +1,9 @@
-# webrtc-gw
+# webrtc-sip-gw
 
 A [SIP over WebSocket](https://datatracker.ietf.org/doc/html/rfc7118) - [SIP](https://datatracker.ietf.org/doc/html/rfc3261) gateway for the AVM Fritz!Box based on [Kamailio](https://www.kamailio.org/w/) and [rtpengine](https://github.com/sipwise/rtpengine).
 
 SIP over (unsecured) WebSocket is exposed on TCP port 8090.
-SIP over secured WebSocket is exposed on TCP port 8091.
+SIP over secured WebSocket is exposed on TCP port 4443.
 
 ## Configuration
 
