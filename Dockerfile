@@ -14,7 +14,7 @@ VOLUME ["/tmp"]
 
 EXPOSE 23400-23500/udp
 EXPOSE 8090/tcp
-EXPOSE 8091/tcp
+EXPOSE 4443/tcp
 
 COPY ./entrypoint.sh /entrypoint.sh
 COPY ./config/supervisor-rtpengine.conf /etc/supervisor/conf.d/rtpengine.conf
