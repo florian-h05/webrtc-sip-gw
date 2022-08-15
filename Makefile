@@ -9,13 +9,13 @@ push:
 	docker push $(IMAGE)
 
 run:
-	docker run --rm -d --network host --name webrtc-sip-gw florian-h05/webrtc-sip-gw:latest
+	docker-compose up -d
 
 stop:
-	docker container stop webrtc-sip-gw
+	docker-compose down
 
 login:
 	docker exec -it webrtc-sip-gw /bin/bash
 
 logs:
-	docker logs --follow webrtc-sip-gw
+	docker-compose logs --follow
