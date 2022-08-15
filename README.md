@@ -2,12 +2,11 @@
 
 A [SIP over WebSocket](https://datatracker.ietf.org/doc/html/rfc7118) - [SIP](https://datatracker.ietf.org/doc/html/rfc3261) gateway for the AVM Fritz!Box based on [Kamailio](https://www.kamailio.org/w/) and [rtpengine](https://github.com/sipwise/rtpengine).
 
-SIP over (unsecured) WebSocket is exposed on TCP port 8090.
-SIP over secured WebSocket is exposed on TCP port 4443.
-
-Additionally, UDP ports 23400-23500 are exposed for some other communication.
+This gateway allows any SIP user of your Fritz!Box to perform calls with SIP over WebSocket, which is unsupported by the Fritz!Box.
 
 ## Important Information
+
+### Requirements
 
 TLS certificate and private key are required at:
 - certificate: `/etc/ssl/fullchain.pem`
@@ -15,6 +14,13 @@ TLS certificate and private key are required at:
 The provided [docker-compose file](/docker-compose.yml) helps you with mounting those.
 
 The domain of the SIP server is "hard-coded" to `fritz.box`.
+
+### Ports
+
+SIP over (unsecured) WebSocket is exposed on TCP port 8090.
+SIP over secured WebSocket is exposed on TCP port 4443.
+
+Additionally, UDP ports 23400-23500 are exposed for some other communication.
 
 ## Container Setup Guide
 
@@ -67,4 +73,10 @@ Execute the following:
 sudo docker-compose up -d
 ```
 
+## Client Setup Guide
 
+Using the [`oh-sipclient`](https://openhab.org/docs/ui/components/oh-sipclient.html) component or widget, sue the following configuration:
+- `websocketUrl`: `wss://YOUR-DOCKER-HOST:4443`
+- `domain`: `fritz.box`
+- `username`: any valid SIP user in your Fritz!Box
+- `password`: password of your valid SIP user
