@@ -56,6 +56,15 @@ sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout ./ssl/sipgw.ke
 
 You will be prompted for some information which you will need to fill out for the certificate, when it asks for a Common Name, you may enter your Docker host's IP Address or hostname.
 
+### Container Start-Up
+
+Execute the following:
+```shell
+sudo docker-compose up -d
+```
+
+## Client Setup Guide
+
 #### Install & Trust Certificate on Clients
 
 Copy the `sipgw.crt` (only this file, not the key!) to your clients and open the file.
@@ -66,16 +75,9 @@ On iOS/iPadOS, a popup that tells you to visit the settings should open up.
 Visit the settings as told and proceed.
 As a final step, follow [Trust manually installed certificate profiles in iOS and iPadOS | Apple Support](https://support.apple.com/en-nz/HT204477).
 
-### Container Start-Up
+#### openHAB MainUI Setup
 
-Execute the following:
-```shell
-sudo docker-compose up -d
-```
-
-## Client Setup Guide
-
-Using the [`oh-sipclient`](https://openhab.org/docs/ui/components/oh-sipclient.html) component or widget, sue the following configuration:
+Using the [`oh-sipclient`](https://openhab.org/docs/ui/components/oh-sipclient.html) component or widget, use the following configuration:
 - `websocketUrl`: `wss://YOUR-DOCKER-HOST:4443`
 - `domain`: `fritz.box`
 - `username`: any valid SIP user in your Fritz!Box
