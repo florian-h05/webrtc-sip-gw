@@ -54,10 +54,10 @@ OpenSSL can be told to generate a 2048 bit long RSA key and a certificate that i
 - Replace `<IP-ADDRESS>` with your server's IP address.
 - Replace `<ADDITIONAL-HOSTNAME>` with another hostname the certificate should be valid for, or delete `,DNS:<ADDITIONAL-HOSTNAME>`.
 ```shell
-openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -addext 'subjectAltName=IP:<IP-ADDRESS>,DNS:<ADDITIONAL-HOSTNAME>,' -keyout ./ssl/sipgw.key -out ./ssl/sipgw.crt
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -addext 'subjectAltName=IP:<IP-ADDRESS>,DNS:<ADDITIONAL-HOSTNAME>' -keyout ./ssl/sipgw.key -out ./ssl/sipgw.crt
 ```
 
-You will be prompted for some information which you will need to fill out for the certificate, when it asks for a Common Name, you may enter your Docker host's IP Address or hostname.
+You will be prompted for some information which you will need to fill out for the certificate, please remember to fill in a hostname when it asks for Common Name.
 
 ### Container Start-Up
 
