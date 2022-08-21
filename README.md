@@ -49,9 +49,12 @@ OpenSSL is packaged for most Linux distributions, installing it should be as sim
 sudo apt install openssl
 ```
 
-OpenSSL can be told to generate a 2048 bit long RSA key and a certificate that is valid for ten years:
+OpenSSL can be told to generate a 2048 bit long RSA key and a certificate that is valid for ten years, but there are some important requirements:
+- You have any hostname for the CN (common name) of the certificate. Enter this hostname when OpenSSL asks for `Common Name (e.g. server FQDN or YOUR name) []:`. It is not required that the server can be reached under this hostname, but the certificate must have a hostname as CN.
+- Replace `<IP-ADDRESS>` with your server's IP address.
+- Replace `<ADDITIONAL-HOSTNAME>` with another hostname the certificate should be valid for, or delete `DNS:<ADDITIONAL-HOSTNAME>`.
 ```shell
-sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout ./ssl/sipgw.key -out ./ssl/sipgw.crt
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -addext 'subjectAltName=IP:<IP-ADDRESS>,DNS:<ADDITIONAL-HOSTNAME>,' -keyout ./ssl/sipgw.key -out ./ssl/sipgw.crt
 ```
 
 You will be prompted for some information which you will need to fill out for the certificate, when it asks for a Common Name, you may enter your Docker host's IP Address or hostname.
