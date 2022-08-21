@@ -76,7 +76,6 @@ On Android and Windows, a popup with a certificate installation wizard should op
 
 On iOS/iPadOS, a popup that tells you to visit the settings should open up.
 Visit the settings as told and proceed.
-As a final step, follow [Trust manually installed certificate profiles in iOS and iPadOS | Apple Support](https://support.apple.com/en-nz/HT204477).
 
 #### openHAB MainUI Setup
 
