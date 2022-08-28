@@ -54,8 +54,11 @@ OpenSSL can be told to generate a 2048 bit long RSA key and a certificate that i
 - Replace `<IP-ADDRESS>` with your server's IP address.
 - Replace `<ADDITIONAL-HOSTNAME>` with another hostname the certificate should be valid for, or delete `,DNS:<ADDITIONAL-HOSTNAME>`.
 ```shell
-openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -addext 'subjectAltName=IP:<IP-ADDRESS>,DNS:<ADDITIONAL-HOSTNAME>' -keyout ./ssl/sipgw.key -out ./ssl/sipgw.crt
+openssl req -x509 -nodes -days 825 -newkey rsa:2048 -addext 'subjectAltName=IP:<IP-ADDRESS>,DNS:<ADDITIONAL-HOSTNAME>' -addext 'keyUsage = digitalSignature,keyEncipherment' -addext 'extendedKeyUsage = serverAuth' -keyout ./ssl/sipgw.key -out ./ssl/sipgw.crt
 ```
+
+This certificat follows the [Requirements for trusted certificates in iOS 13 and macOS 10.15](https://support.apple.com/en-us/HT210176).
+Key usage and extended key usage are set as defined in [RFC5280](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.12).
 
 You will be prompted for some information which you will need to fill out for the certificate, please remember to fill in a hostname when it asks for Common Name.
 
