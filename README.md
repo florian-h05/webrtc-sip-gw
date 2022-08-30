@@ -69,6 +69,12 @@ Execute the following:
 sudo docker-compose up -d
 ```
 
+The following error messages can be ignored during startup:
+```text
+ERROR: rtpengine [rtpengine.c:2887]: send_rtpp_command(): can’t send command „ping“ to RTPEngine <udp:127.0.0.1:22222>
+ERROR: rtpengine [rtpengine.c:2788]: rtpp_test(): proxy did not respond to ping
+```
+
 ## Client Setup Guide
 
 #### Install & Trust Certificate on Clients
