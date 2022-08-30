@@ -1,6 +1,7 @@
 BUILD   ?= $(shell date +%Y%m%d%H%M)
-VERSION := 1.0.0-$(BUILD)
-IMAGE   := florian-h05/webrtc-sip-gw
+TAG     ?= $(shell git describe --abbrev=0)
+VERSION := $(TAG)-$(BUILD)
+IMAGE   := ghcr.io/florian-h05/webrtc-sip-gw
 
 build:
 	docker buildx build --platform linux/amd64 -t $(IMAGE):latest -t $(IMAGE):$(VERSION) --rm .
