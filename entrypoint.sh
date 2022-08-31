@@ -5,9 +5,11 @@ set -e
 MY_IP=$(hostname -I | awk '{print $1}')
 MY_DOMAIN=$(hostname)
 
-sed -i -e "s/MY_IP/$MY_IP/g" /etc/rtpengine/rtpengine.conf
+sed -i -e "s/FILL_MY_IP/$MY_IP/g" /etc/rtpengine/rtpengine.conf
 sed -i -e "s/FILL_MY_IP/$MY_IP/g" /etc/kamailio/kamailio.cfg
+sed -i -e "s/FILL_MY_IP/$MY_IP/g" /healthcheck.sh
 
 sed -i -e "s/FILL_MY_DOMAIN/${MY_DOMAIN}/g" /etc/kamailio/kamailio.cfg
 
+# shellcheck disable=SC2068
 exec $@
