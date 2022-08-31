@@ -49,7 +49,7 @@ OpenSSL is packaged for most Linux distributions, installing it should be as sim
 sudo apt install openssl
 ```
 
-OpenSSL can be told to generate a 2048 bit long RSA key and a certificate that is valid for ten years, but there are some important requirements:
+OpenSSL can be told to generate a 2048 bit long RSA key and a certificate that is valid for 825 days, but there are some important requirements:
 - You have any hostname for the CN (common name) of the certificate. Enter this hostname when OpenSSL asks for `Common Name (e.g. server FQDN or YOUR name) []:`. It is not required that the server can be reached under this hostname, but the certificate must have a hostname as CN.
 - Replace `<IP-ADDRESS>` with your server's IP address.
 - Replace `<ADDITIONAL-HOSTNAME>` with another hostname the certificate should be valid for, or delete `,DNS:<ADDITIONAL-HOSTNAME>`.
