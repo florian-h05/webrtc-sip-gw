@@ -1,17 +1,11 @@
 FROM debian:11.4-slim
 
-ARG BUILD_DATE
-ARG VCS_REF
-
 # Basic build-time metadata as defined at http://label-schema.org
-LABEL org.label-schema.build-date=$BUILD_DATE \
-    org.label-schema.docker.dockerfile="/Dockerfile" \
+LABEL org.label-schema.docker.dockerfile="/Dockerfile" \
     org.label-schema.license="MIT" \
     org.label-schema.name="WebRTC SIP Gateway" \
-    org.label-schema.version=$VERSION \
     org.label-schema.description="A WebRTC-SIP gateway for Fritzbox based on Kamailio and rtpengine" \
     org.label-schema.url="https://github.com/florian-h05/webrtc-sip-gw" \
-    org.label-schema.vcs-ref=$VCS_REF \
     org.label-schema.vcs-type="Git" \
     org.label-schema.vcs-url="https://github.com/florian-h05/webrtc-sip-gw.git" \
     maintainer="Florian Hotze <florianh_dev@icloud.com>"
@@ -45,9 +39,10 @@ EXPOSE 23400-23500/udp
 EXPOSE 8090 4443
 
 # Set healthcheck
-HEALTHCHECK --interval=5m --timeout=5s --retries=3 CMD curl --include --no-buffer --header "Connection: Upgrade" --header "Upgrade: websocket" http://localhost:8090 || exit 1
+HEALTHCHECK --interval=1m --timeout=5s --retries=3 CMD bash /healthcheck.sh
 
 COPY ./entrypoint.sh /entrypoint.sh
+COPY ./healthcheck.sh /healthcheck.sh
 # Copy configuration
 COPY ./config/supervisor-rtpengine.conf /etc/supervisor/conf.d/rtpengine.conf
 COPY ./config/supervisor-kamailio.conf /etc/supervisor/conf.d/kamailio.conf
