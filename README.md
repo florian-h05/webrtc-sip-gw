@@ -93,3 +93,8 @@ Using the [`oh-sipclient`](https://openhab.org/docs/ui/components/oh-sipclient.h
 - `domain`: `fritz.box`
 - `username`: any valid SIP user in your Fritz!Box
 - `password`: password of your valid SIP user
+
+## Acknowledgments
+
+Thanks to [@havfo](https://github.com/havfo) for sharing the configuration files on [havfo/WEBRTC-to-SIP](https://github.com/havfo/WEBRTC-to-SIP).
+Huge thanks to [@nanosonde](https://github.com/nanosonde) for initially creating this project.
