@@ -46,9 +46,10 @@ COPY ./healthcheck.sh /healthcheck.sh
 # Copy configuration
 COPY ./config/supervisor-rtpengine.conf /etc/supervisor/conf.d/rtpengine.conf
 COPY ./config/supervisor-kamailio.conf /etc/supervisor/conf.d/kamailio.conf
-COPY ./config/rtpengine.conf /etc/rtpengine/rtpengine.conf
-COPY ./config/kamailio.cfg /etc/kamailio/kamailio.cfg
-COPY ./config/tls.cfg /etc/kamailio/tls.cfg
+COPY ./config/rtpengine/rtpengine.conf /etc/rtpengine/rtpengine.conf
+COPY ./config/kamailio/kamailio.cfg /etc/kamailio/kamailio.cfg
+COPY ./config/kamailio/kamctlrc /etc/kamailio/kamctlrc
+COPY ./config/kamailio/tls.cfg /etc/kamailio/tls.cfg
 
 ENTRYPOINT ["/entrypoint.sh"]
 
