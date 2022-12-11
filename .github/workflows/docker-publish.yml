@@ -9,6 +9,7 @@ on:
   push:
     tags:
       - 'v*'
+      - 'dev'
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -19,8 +20,7 @@ env:
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     permissions:
       contents: read
       packages: write
