@@ -9,18 +9,20 @@ This gateway allows any SIP user of your Fritz!Box to perform calls with SIP ove
 ### Requirements
 
 TLS certificate and private key are required at:
+
 - certificate: `/etc/ssl/fullchain.pem`
 - private key: `/etc/ssl/privkey.pem`
+
 The provided [docker-compose file](/docker-compose.yml) helps you with mounting those.
 
 The domain of the SIP server is "hard-coded" to `fritz.box`.
 
 ### Ports
 
-SIP over (unsecured) WebSocket is exposed on TCP port 8090.
-SIP over secured WebSocket is exposed on TCP port 4443.
+SIP over WebSocket is exposed on TCP ports 8090 (unsecured) and 4443 (secured).
+Additionally, UDP ports 23400-23500 are exposed by rtpengine.
 
-Additionally, UDP ports 23400-23500 are exposed for some other communication.
+If you use any firewall, these ports need to be open!
 
 ## Container Setup Guide
 
@@ -39,12 +41,12 @@ The private key should also be placed on the `ssl` directory and named `sipgw.ke
 
 The certificate needs to be installed and trusted on your clients.
 
-If you don't get a certificate from a public CA or have your own private CA,
-you need to generate a self-signed certificate.
+You can either use a certificate from a (public or private) CA or generate your own self-signed certificate.
 
 #### Using OpenSSL to Generate Self-Signed Certificates
 
 OpenSSL is packaged for most Linux distributions, installing it should be as simple as:
+
 ```shell
 sudo apt install openssl
 ```
@@ -57,7 +59,7 @@ OpenSSL can be told to generate a 2048 bit long RSA key and a certificate that i
 openssl req -x509 -nodes -days 825 -newkey rsa:2048 -addext 'subjectAltName=IP:<IP-ADDRESS>,DNS:<ADDITIONAL-HOSTNAME>' -addext 'keyUsage = digitalSignature,keyEncipherment' -addext 'extendedKeyUsage = serverAuth' -keyout ./ssl/sipgw.key -out ./ssl/sipgw.crt
 ```
 
-This certificat follows the [Requirements for trusted certificates in iOS 13 and macOS 10.15](https://support.apple.com/en-us/HT210176).
+This certificate follows the [Requirements for trusted certificates in iOS 13 and macOS 10.15](https://support.apple.com/en-us/HT210176).
 Key usage and extended key usage are set as defined in [RFC5280](https://www.rfc-editor.org/rfc/rfc5280#section-4.2.1.12).
 
 You will be prompted for some information which you will need to fill out for the certificate, please remember to fill in a hostname when it asks for Common Name.
@@ -65,11 +67,13 @@ You will be prompted for some information which you will need to fill out for th
 ### Container Start-Up
 
 Execute the following:
+
 ```shell
 sudo docker-compose up -d
 ```
 
 The following error messages can be ignored during startup:
+
 ```text
 ERROR: rtpengine [rtpengine.c:2887]: send_rtpp_command(): can’t send command „ping“ to RTPEngine <udp:127.0.0.1:22222>
 ERROR: rtpengine [rtpengine.c:2788]: rtpp_test(): proxy did not respond to ping
@@ -89,6 +93,7 @@ Visit the settings as told and proceed.
 #### openHAB MainUI Setup
 
 Using the [`oh-sipclient`](https://openhab.org/docs/ui/components/oh-sipclient.html) component or widget, use the following configuration:
+
 - `websocketUrl`: `wss://YOUR-DOCKER-HOST:4443`
 - `domain`: `fritz.box`
 - `username`: any valid SIP user in your Fritz!Box

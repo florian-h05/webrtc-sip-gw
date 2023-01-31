@@ -29,9 +29,9 @@ RUN \
 # Do not persist /tmp in a volume to allow clearing it by restarting the container
 # VOLUME ["/tmp"]
 
-# Expose UDP ports for WebRTC communication
+# Expose rtpengine UDP ports
 EXPOSE 23400-23500/udp
-# Expose unsecured and secured WebSocket port
+# Expose Kamailio TCP ports for unsecured and secured SIP over WebSocket
 EXPOSE 8090 4443
 
 # Set healthcheck
