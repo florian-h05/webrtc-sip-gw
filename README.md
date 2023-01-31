@@ -6,16 +6,17 @@ This gateway allows any SIP user of your Fritz!Box to perform calls with SIP ove
 
 ## Important Information
 
+The domain of the SIP server is “hard-coded” to `fritz.box`.
+
+To connect to the SIP over WebSocket from mobile clients like Android & iOS, it is required that you use TLS.
+webrtc-sip-gw will enable TLS by default and requires certificated, but you can disable the internal TLS if you want to use a proxy like nginx instead.
+
 ### Requirements
 
-TLS certificate and private key are required at:
+Unless TLS is not explicitly disabled, TLS certificate and private key are required at these (container internal) paths:
 
 - certificate: `/etc/ssl/fullchain.pem`
 - private key: `/etc/ssl/privkey.pem`
-
-The provided [docker-compose file](/docker-compose.yml) helps you with mounting those.
-
-The domain of the SIP server is "hard-coded" to `fritz.box`.
 
 ### Ports
 
@@ -28,11 +29,14 @@ If you use any firewall, these ports need to be open!
 
 ### Directory & Docker Compose File
 
-Create a new directory on your Docker host and place [docker-compose.yml](/docker-compose.yml) there.
+Create a new directory on your Docker host and place the [docker-compose.yml](/docker-compose.yml) there.
 
-`cd` into the new directory.
+If you want to disable the internal TLS, set the value of the `TLS_DISABLE` environment variable in the `docker-compose` file to `true`:
 
-Create a `ssl` folder.
+Unless you have not explicitly disabled TLS:
+
+- `cd` into the new directory.
+- Create a `ssl` folder.
 
 ### Certificate
 
