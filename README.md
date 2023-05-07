@@ -6,20 +6,39 @@ This gateway allows any SIP user of your Fritz!Box to perform calls with SIP ove
 
 ## Important Information
 
-### Requirements
+The domain of the SIP server is “hard-coded” to `fritz.box`.
 
-TLS certificate and private key are required at:
+To connect to the SIP over WebSocket from mobile clients like Android & iOS, it is required that you use TLS.
+webrtc-sip-gw will enable it’s internal TLS by default and therefore requires a certificate, but you can disable the internal TLS if you want to use a proxy like nginx instead.
+
+### Internal TLS
+
+Unless internal TLS is not explicitly disabled, TLS certificate and private key are required at these (container internal) paths:
 
 - certificate: `/etc/ssl/fullchain.pem`
 - private key: `/etc/ssl/privkey.pem`
 
-The provided [docker-compose file](/docker-compose.yml) helps you with mounting those.
+The provided `docker-compose` file includes mounts for these two files.
 
-The domain of the SIP server is "hard-coded" to `fritz.box`.
+### nginx Reverse Proxy
+
+Instead of using the internal TLS and therefore needing to provide a certificate, you can use an existing nginx reverse proxy.
+
+Just add this `location` block to a valid `server` configuration:
+
+```
+    location /sip {
+        proxy_pass                    http://127.0.0.1:8090; # Adjust to your webrtc-sip-gw Docker host's IP
+        proxy_http_version            1.1;
+        proxy_set_header Upgrade      $http_upgrade;
+        proxy_set_header Connection   "upgrade";
+        proxy_read_timeout            86400;
+    }
+```
 
 ### Ports
 
-SIP over WebSocket is exposed on TCP ports 8090 (unsecured) and 4443 (secured).
+SIP over WebSocket is exposed on TCP ports 8090 (unsecured) and, if internal TLS is enabled, 4443 (secured).
 Additionally, UDP ports 23400-23500 are exposed by rtpengine.
 
 If you use any firewall, these ports need to be open!
@@ -28,11 +47,14 @@ If you use any firewall, these ports need to be open!
 
 ### Directory & Docker Compose File
 
-Create a new directory on your Docker host and place [docker-compose.yml](/docker-compose.yml) there.
+Create a new directory on your Docker host and place the [docker-compose.yml](/docker-compose.yml) there.
 
-`cd` into the new directory.
+If you want to disable the internal TLS, set the value of the `TLS_DISABLE` environment variable in the `docker-compose` file to `true`:
 
-Create a `ssl` folder.
+Unless you have not explicitly disabled TLS:
+
+- `cd` into the new directory.
+- Create a `ssl` folder.
 
 ### Certificate
 
