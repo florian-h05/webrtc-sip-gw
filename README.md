@@ -6,10 +6,11 @@ This gateway allows any SIP user of your Fritz!Box to perform calls with SIP ove
 
 ## Important Information
 
-The domain of the SIP server is “hard-coded” to `fritz.box`.
-
 To connect to the SIP over WebSocket from mobile clients like Android & iOS, it is required that you use TLS.
 webrtc-sip-gw will enable it’s internal TLS by default and therefore requires a certificate, but you can disable the internal TLS if you want to use a proxy like nginx instead.
+
+The Docker container will automatically configure IP address and hostname/domain name for the webrtc-sip-gw, however in some cases (e.g. with multiplce NICs) this auto-configuration may pick the "wrong" settings.
+Set the `MY_IP` and `MY_DOMAIN` environment variables in the `environment` section of the docker-compose file to override the auto-configured values.
 
 ### Internal TLS
 
@@ -42,6 +43,11 @@ SIP over WebSocket is exposed on TCP ports 8090 (unsecured) and, if internal TLS
 Additionally, UDP ports 23400-23500 are exposed by rtpengine.
 
 If you use any firewall, these ports need to be open!
+For ufw, you can open these ports using the following command:
+
+```bash
+ufw allow in from any to any port 23400:23500 proto udp comment "webrtc-sip-gw"
+```
 
 ## Container Setup Guide
 
