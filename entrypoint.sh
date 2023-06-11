@@ -3,7 +3,7 @@ set -e
 
 MY_IP=${MY_IP:=$(hostname -I | awk '{print $1}')}
 MY_DOMAIN=${MY_DOMAIN:=$(hostname)}
-MY_SIP_DOMAIN=${FILL_SIP_DOMAIN:=fritz.box}
+SIP_DOMAIN=${SIP_DOMAIN:=fritz.box}
 
 sed -i -e "s/FILL_MY_IP/${MY_IP}/g" /etc/rtpengine/rtpengine.conf
 sed -i -e "s/FILL_MY_IP/${MY_IP}/g" /etc/kamailio/kamailio.cfg
