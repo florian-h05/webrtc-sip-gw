@@ -4,6 +4,8 @@ A [SIP over WebSocket](https://datatracker.ietf.org/doc/html/rfc7118) - [SIP](ht
 
 This gateway allows any SIP user of your Fritz!Box to perform calls with SIP over WebSocket, which is unsupported by the Fritz!Box.
 
+Please note that this might also work for other SIP servers, however this container is developed for and tested with AVM Fritz!Boxes.
+
 ## Important Information
 
 To connect to the SIP over WebSocket from mobile clients like Android & iOS, it is required that you use TLS.
