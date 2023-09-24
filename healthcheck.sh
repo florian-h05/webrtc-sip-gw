@@ -1,2 +1,3 @@
 #!/bin/bash
-curl --include --no-buffer --header "Connection: Upgrade" --header "Upgrade: websocket" http://FILL_MY_IP:8090 || exit 1
+if ! supervisorctl status rtpengine | grep -q 'RUNNING'; then exit 1; fi
+if ! supervisorctl status kamailio | grep -q 'RUNNING'; then exit 1; fi
