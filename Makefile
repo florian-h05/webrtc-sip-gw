@@ -9,7 +9,7 @@ build:
 push:
 	docker push $(IMAGE)
 
-run:
+start:
 	docker compose up -d
 
 stop:
