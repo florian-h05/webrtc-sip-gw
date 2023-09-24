@@ -1,5 +1,5 @@
 BUILD   ?= $(shell date +%Y%m%d%H%M)
-TAG     ?= $(shell git describe --abbrev=0)
+TAG     ?= $(shell git describe --tags --abbrev=0)
 VERSION := $(TAG)-$(BUILD)
 IMAGE   := ghcr.io/florian-h05/webrtc-sip-gw
 
@@ -10,13 +10,13 @@ push:
 	docker push $(IMAGE)
 
 run:
-	docker-compose up -d
+	docker compose up -d
 
 stop:
-	docker-compose down
+	docker compose down
 
 login:
 	docker exec -it webrtc-sip-gw /bin/bash
 
 logs:
-	docker-compose logs --follow
+	docker compose logs --follow
