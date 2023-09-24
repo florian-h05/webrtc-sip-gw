@@ -35,7 +35,7 @@ EXPOSE 23400-23500/udp
 EXPOSE 8090 4443
 
 # Set healthcheck
-HEALTHCHECK --interval=1m --timeout=5s --retries=3 CMD bash /healthcheck.sh
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD bash /healthcheck.sh
 
 COPY ./entrypoint.sh /entrypoint.sh
 COPY ./healthcheck.sh /healthcheck.sh
