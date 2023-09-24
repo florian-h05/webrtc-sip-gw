@@ -10,4 +10,4 @@ services:
      - ./ssl/sipgw.key:/etc/ssl/privkey.pem:ro # Can be left out when TLS is disabled
      - ./ssl/sipgw.crt:/etc/ssl/fullchain.pem:ro # Can be left out when TLS is disabled
     environment:
-     - TLS_DISABLE=false # Optional, defaults to false
+     - TLS_DISABLE=true # Optional, defaults to false

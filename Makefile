@@ -4,7 +4,7 @@ VERSION := $(TAG)-$(BUILD)
 IMAGE   := ghcr.io/florian-h05/webrtc-sip-gw
 
 build:
-	docker buildx build --platform linux/amd64 -t $(IMAGE):latest -t $(IMAGE):$(VERSION) --rm .
+	docker buildx build --platform linux/amd64 -t $(IMAGE):latest -t $(IMAGE):$(VERSION) --rm --load .
 
 push:
 	docker push $(IMAGE)

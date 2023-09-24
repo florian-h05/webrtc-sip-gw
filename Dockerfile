@@ -1,4 +1,4 @@
-FROM debian:11-slim
+FROM debian:12-slim
 
 # Basic build-time metadata as defined at http://label-schema.org
 LABEL org.label-schema.docker.dockerfile="/Dockerfile" \
@@ -13,13 +13,14 @@ LABEL org.label-schema.docker.dockerfile="/Dockerfile" \
 # Install requirements
 RUN \
   apt-get update \
-  && apt-get install -y --no-install-recommends wget curl gnupg2 ca-certificates iproute2 supervisor nano
+  && apt-get install -y --no-install-recommends supervisor nano # wget gnupg2 ca-certificates
 
 # Add rtpengine source
-RUN \
-  wget https://dfx.at/rtpengine/latest/pool/main/r/rtpengine-dfx-repo-keyring/rtpengine-dfx-repo-keyring_1.0_all.deb \
-  && dpkg -i rtpengine-dfx-repo-keyring_1.0_all.deb \
-  && echo 'deb [signed-by=/usr/share/keyrings/dfx.at-rtpengine-archive-keyring.gpg] https://dfx.at/rtpengine/10.5 bullseye main' > /etc/apt/sources.list.d/rtpengine.list
+#RUN \
+#  wget https://dfx.at/rtpengine/latest/pool/main/r/rtpengine-dfx-repo-keyring/rtpengine-dfx-repo-keyring_1.0_all.deb \
+#  && dpkg -i rtpengine-dfx-repo-keyring_1.0_all.deb \
+#  && echo 'deb [signed-by=/usr/share/keyrings/dfx.at-rtpengine-archive-keyring.gpg] https://dfx.at/rtpengine/10.5 bookworm main' > /etc/apt/sources.list.d/rtpengine.list
+
 # Install Kamailio and rtpengine
 RUN \
   apt-get update \
