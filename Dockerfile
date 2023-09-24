@@ -13,13 +13,7 @@ LABEL org.label-schema.docker.dockerfile="/Dockerfile" \
 # Install requirements
 RUN \
   apt-get update \
-  && apt-get install -y --no-install-recommends supervisor nano # wget gnupg2 ca-certificates
-
-# Add rtpengine source
-#RUN \
-#  wget https://dfx.at/rtpengine/latest/pool/main/r/rtpengine-dfx-repo-keyring/rtpengine-dfx-repo-keyring_1.0_all.deb \
-#  && dpkg -i rtpengine-dfx-repo-keyring_1.0_all.deb \
-#  && echo 'deb [signed-by=/usr/share/keyrings/dfx.at-rtpengine-archive-keyring.gpg] https://dfx.at/rtpengine/10.5 bookworm main' > /etc/apt/sources.list.d/rtpengine.list
+  && apt-get install -y --no-install-recommends supervisor nano
 
 # Install Kamailio and rtpengine
 RUN \
