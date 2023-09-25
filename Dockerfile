@@ -19,7 +19,7 @@ RUN \
 RUN \
   apt-get update \
   && apt-get install -y --no-install-recommends rtpengine \
-  && apt-get install -y --no-install-recommends kamailio kamailio-websocket-modules kamailio-tls-modules kamailio-presence-modules
+  && apt-get install -y --no-install-recommends kamailio kamailio-websocket-modules kamailio-tls-modules kamailio-presence-modules kamailio-outbound-modules
 
 # Do not persist /tmp in a volume to allow clearing it by restarting the container
 # VOLUME ["/tmp"]
