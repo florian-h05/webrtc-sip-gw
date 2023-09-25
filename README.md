@@ -31,7 +31,7 @@ Just add this `location` block to a valid `server` configuration:
 
 ```
     location /sip {
-        proxy_pass                    http://127.0.0.1:8090; # Adjust to your webrtc-sip-gw Docker host's IP
+        proxy_pass                    http://FILL_YOUR_IP:8090; # Adjust to your webrtc-sip-gw Docker host's IP
         proxy_http_version            1.1;
         proxy_set_header Upgrade      $http_upgrade;
         proxy_set_header Connection   "upgrade";
@@ -63,6 +63,14 @@ Unless you have not explicitly disabled TLS:
 
 - `cd` into the new directory.
 - Create a `ssl` folder.
+
+### Hostname & IP Address
+
+By default, webrtc-sip-gw is automatically using the hostname of your Docker host and the IP address of an interface.
+
+In case you need to use a different hostname or IP address than the automatically set, e.g. because you have multiple interfaces and webrtc-sip-gw selected the wrong one, you can overwrite the automatically set values.
+
+Set the `MY_IP` environment variable to overwrite the IP address, and set the `MY_DOMAIN` environment variable to overwrite the hostname.
 
 ### Certificate
 
