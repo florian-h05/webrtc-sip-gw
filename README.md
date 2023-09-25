@@ -51,6 +51,12 @@ For ufw, you can open these ports using the following command:
 ufw allow in from any to any port 23400:23500 proto udp comment "webrtc-sip-gw"
 ```
 
+### Platform Support
+
+webrtc-sip-gw is built for Linux on `amd64`, `arm64` and `armv7l`, so it should run on most modern Linux machines, including Raspberry Pis.
+
+I have tested it on `amd64`, in case someone can test on `arm64` or `armv7`, please report (open an issue) how it works.
+
 ## Container Setup Guide
 
 ### Directory & Docker Compose File
