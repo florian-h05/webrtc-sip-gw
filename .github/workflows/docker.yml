@@ -14,6 +14,9 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
   COMPARE_TAG: main
 
+permissions:
+  pull-requests: write
+
 jobs:
   build:
 
