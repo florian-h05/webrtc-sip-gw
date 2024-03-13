@@ -1,10 +1,5 @@
 name: Docker
 
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 on:
   push:
     tags: [ 'v*.*.*' ] # Publishes with latest tag.
@@ -17,7 +12,6 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
-  # Use `main` as the tag to compare to if empty, assuming that it's already pushed
   COMPARE_TAG: main
 
 jobs:
@@ -100,11 +94,14 @@ jobs:
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
 
       # Use Docker Scout to analyze security vulnerabilities
+      # https://github.com/docker/scout-action
       - name: Docker Scout
         id: docker-scout
         if: ${{ github.event_name == 'pull_request' }}
         uses: docker/scout-action@v1
         with:
+          dockerhub-user: ${{ secrets.DOCKER_USER }}
+          dockerhub-password: ${{ secrets.DOCKER_PAT }}
           command: compare
           image: ${{ steps.meta.outputs.tags }}
           to: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.COMPARE_TAG }}
