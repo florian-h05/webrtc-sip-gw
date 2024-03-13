@@ -97,7 +97,7 @@ jobs:
       # Use Docker Scout to analyze security vulnerabilities
       # https://github.com/docker/scout-action
       # Run compare command on PR
-      - name: Docker Scout
+      - name: Run Docker Scout compare on PR
         id: docker-scout-pr
         if: ${{ github.event_name == 'pull_request' }}
         uses: docker/scout-action@v1
@@ -112,7 +112,7 @@ jobs:
           write-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }} # to be able to write the comment
       # Run all-in-one on push to main
-      - name: Run Docker Scout
+      - name: Run Docker Scout all-in-one on push to main
         id: docker-scout-main
         if: ${{ github.ref_name == 'main' }}
         uses: docker/scout-action@v1
