@@ -14,9 +14,6 @@ env:
   SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
   COMPARE_TAG: main
 
-permissions:
-  pull-requests: write
-
 jobs:
   build:
 
@@ -24,6 +21,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+      pull-requests: write
       # This is used to complete the identity challenge
       # with sigstore/fulcio when running outside of PRs.
       id-token: write
