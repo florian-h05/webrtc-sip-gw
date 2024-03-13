@@ -13,11 +13,12 @@ on:
     branches: [ "main" ]
 
 env:
-  # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
-
+  SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
+  # Use `main` as the tag to compare to if empty, assuming that it's already pushed
+  COMPARE_TAG: main
 
 jobs:
   build:
