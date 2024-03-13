@@ -120,7 +120,6 @@ jobs:
           dockerhub-user: ${{ secrets.DOCKER_USER }}
           dockerhub-password: ${{ secrets.DOCKER_PAT }}
           command: cves,recommendations,compare
-          to-latest: true
-          ignore-base: true
+          image: ${{ steps.meta.outputs.tags }}
+          to: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.COMPARE_TAG }}
           ignore-unchanged: true
-          only-fixed: true
