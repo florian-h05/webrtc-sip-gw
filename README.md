@@ -4,15 +4,16 @@ A [SIP over WebSocket](https://datatracker.ietf.org/doc/html/rfc7118) - [SIP](ht
 
 This gateway allows any SIP user of your Fritz!Box to perform calls with SIP over WebSocket, which is unsupported by the Fritz!Box.
 
-Please note that this might also work for other SIP servers, however this container is developed for and tested with AVM Fritz!Boxes.
+Please note that this very likely will also work for other SIP servers, however, we develop for and test with AVM Fritz!Box only.
 
 ## Important Information
 
 To connect to the SIP over WebSocket from mobile clients like Android & iOS, it is required that you use TLS.
-webrtc-sip-gw will enable it’s internal TLS by default and therefore requires a certificate, but you can disable the internal TLS if you want to use a proxy like nginx instead.
+webrtc-sip-gw will enable its internal TLS by default and therefore requires a certificate, but you can disable the internal TLS if you want to use a proxy like _nginx_ instead.
 
-The Docker container will automatically configure IP address and hostname/domain name for the webrtc-sip-gw, however in some cases (e.g. with multiplce NICs) this auto-configuration may pick the "wrong" settings.
-Set the `MY_IP` and `MY_DOMAIN` environment variables in the `environment` section of the docker-compose file to override the auto-configured values.
+The Docker container will automatically configure IP address and hostname/domain name for the webrtc-sip-gw,
+however, in some cases (e.g. with multiple NICs) this autoconfiguration may pick the "wrong" settings.
+Set the `MY_IP` and `MY_DOMAIN` environment variables in the `environment` section of the docker-compose file to override the autoconfigured values.
 
 ### Internal TLS
 
@@ -25,9 +26,9 @@ The provided `docker-compose` file includes mounts for these two files.
 
 ### nginx Reverse Proxy
 
-Instead of using the internal TLS and therefore needing to provide a certificate, you can use an existing nginx reverse proxy.
+Instead of using the internal TLS and therefore needing to provide a certificate, you can use an existing _nginx_ reverse proxy.
 
-Just add this `location` block to a valid `server` configuration:
+Add this `location` block to a valid `server` configuration:
 
 ```
     location /sip {
@@ -42,13 +43,13 @@ Just add this `location` block to a valid `server` configuration:
 ### Ports
 
 SIP over WebSocket is exposed on TCP ports 8090 (unsecured) and, if internal TLS is enabled, 4443 (secured).
-Additionally, UDP ports 23400-23500 are exposed by rtpengine.
+Additionally, UDP ports 23400 to 23500 are exposed by _rtpengine_.
 
 If you use any firewall, these ports need to be open!
 For ufw, you can open these ports using the following command:
 
 ```bash
-ufw allow in from any to any port 23400:23500 proto udp comment "webrtc-sip-gw"
+ufw allow in from any to any port 23400:23500 proto udp comment "webrtc-sip-gw UDP transport"
 ```
 
 ### Platform Support
@@ -74,8 +75,8 @@ Unless you have not explicitly disabled TLS:
 
 By default, webrtc-sip-gw is automatically using the hostname of your Docker host and the IP address of an interface.
 
-In case you need to use a different hostname or IP address than the automatically set, e.g. because you have multiple interfaces and webrtc-sip-gw selected the wrong one, you can overwrite the automatically set values.
-
+In case you need to use a different hostname or IP address than the autoconfigured one,
+e.g. because you have multiple interfaces and webrtc-sip-gw selected the wrong one, you can overwrite the automatically set values.
 Set the `MY_IP` environment variable to overwrite the IP address, and set the `MY_DOMAIN` environment variable to overwrite the hostname.
 
 ### Certificate
