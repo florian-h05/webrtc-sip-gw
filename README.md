@@ -44,7 +44,7 @@ Add this `location` block to a valid `server` configuration:
 
 SIP over WebSocket is exposed on TCP ports 8080 (unsecured) and, if internal TLS is enabled, 8443 (secured).
 Additionally, UDP ports 23400 to 23500 are exposed by _rtpengine_.
-You can overwrite the WebSocker ports by setting the `MY_WS_PORT` and `MY_WSS_PORT` environment variables in the [`docker-compose.yml`](docker-compose.yml) file.
+You can overwrite the WebSocker ports by setting the `WS_PORT` and `WSS_PORT` environment variables in the [`docker-compose.yml`](docker-compose.yml) file.
 
 If you use any firewall on the Docker host, the above ports need to be open!
 For ufw, you can open these ports using the following command:
