@@ -22,7 +22,7 @@ Unless internal TLS is not explicitly disabled, TLS certificate and private key 
 - certificate: `/etc/ssl/fullchain.pem`
 - private key: `/etc/ssl/privkey.pem`
 
-The provided `docker-compose` file includes mounts for these two files.
+The provided [`docker-compose.yml`](docker-compose.yml) file mounts the `ssl` directory properly into the container.
 
 ### nginx Reverse Proxy
 
@@ -42,21 +42,24 @@ Add this `location` block to a valid `server` configuration:
 
 ### Ports
 
-SIP over WebSocket is exposed on TCP ports 8090 (unsecured) and, if internal TLS is enabled, 4443 (secured).
+SIP over WebSocket is exposed on TCP ports 8080 (unsecured) and, if internal TLS is enabled, 8443 (secured).
 Additionally, UDP ports 23400 to 23500 are exposed by _rtpengine_.
+You can overwrite the WebSocker ports by setting the `WS_PORT` and `WSS_PORT` environment variables in the [`docker-compose.yml`](docker-compose.yml) file.
 
-If you use any firewall, these ports need to be open!
+If you use any firewall on the Docker host, the above ports need to be open!
 For ufw, you can open these ports using the following command:
 
 ```bash
+ufw allow in from any to any port 8080 proto tcp comment "webrtc-sip-gw WebSocket transport"
+ufw allow in from any to any port 8443 proto tcp comment "webrtc-sip-gw WebSocket Secure transport"
 ufw allow in from any to any port 23400:23500 proto udp comment "webrtc-sip-gw UDP transport"
 ```
 
 ### Platform Support
 
-webrtc-sip-gw is built for Linux on `amd64`, `arm64` and `armv7l`, so it should run on most modern Linux machines, including Raspberry Pis.
+webrtc-sip-gw is built for Linux on `amd64` and  `arm64`, so it should run on most modern Linux machines, including Raspberry Pis.
 
-I have tested it on `amd64`, in case someone can test on `arm64` or `armv7`, please report (open an issue) how it works.
+`amd64` has been tested in production on a x86_64 Debian 12 host, `arm64` has been validated to start on QEMU emulation.
 
 ## Container Setup Guide
 
@@ -64,7 +67,7 @@ I have tested it on `amd64`, in case someone can test on `arm64` or `armv7`, ple
 
 Create a new directory on your Docker host and place the [docker-compose.yml](/docker-compose.yml) there.
 
-If you want to disable the internal TLS, set the value of the `TLS_DISABLE` environment variable in the `docker-compose` file to `true`:
+If you want to disable the internal TLS, set the value of the `TLS_DISABLE` environment variable in the [`docker-compose.yml`](docker-compose.yml) file to `true`:
 
 Unless you have not explicitly disabled TLS:
 
@@ -101,7 +104,7 @@ OpenSSL can be told to generate a 2048 bit long RSA key and a certificate that i
 - Replace `<IP-ADDRESS>` with your server's IP address.
 - Replace `<ADDITIONAL-HOSTNAME>` with another hostname the certificate should be valid for, or delete `,DNS:<ADDITIONAL-HOSTNAME>`.
 ```shell
-openssl req -x509 -nodes -days 825 -newkey rsa:2048 -addext 'subjectAltName=IP:<IP-ADDRESS>,DNS:<ADDITIONAL-HOSTNAME>' -addext 'keyUsage = digitalSignature,keyEncipherment' -addext 'extendedKeyUsage = serverAuth' -keyout ./ssl/sipgw.key -out ./ssl/sipgw.crt
+openssl req -x509 -nodes -days 825 -newkey rsa:2048 -addext 'subjectAltName=IP:<IP-ADDRESS>,DNS:<ADDITIONAL-HOSTNAME>' -addext 'keyUsage = digitalSignature,keyEncipherment' -addext 'extendedKeyUsage = serverAuth' -keyout ./ssl/privkey.pem -out ./ssl/fullchain.pem
 ```
 
 This certificate follows the [Requirements for trusted certificates in iOS 13 and macOS 10.15](https://support.apple.com/en-us/HT210176).
@@ -128,7 +131,7 @@ ERROR: rtpengine [rtpengine.c:2788]: rtpp_test(): proxy did not respond to ping
 
 #### Install & Trust Certificate on Clients
 
-Copy the `sipgw.crt` (only this file, not the key!) to your clients and open the file.
+Copy the `fullchain.pem` certificate file to your clients and open the file.
 
 On Android and Windows, a popup with a certificate installation wizard should open up.
 
@@ -139,8 +142,8 @@ Visit the settings as told and proceed.
 
 Using the [`oh-sipclient`](https://openhab.org/docs/ui/components/oh-sipclient.html) component or widget, use the following configuration:
 
-- `websocketUrl`: `wss://YOUR-DOCKER-HOST:4443`
-- `domain`: `fritz.box`
+- `websocketUrl`: `wss://YOUR-DOCKER-HOST:8443`
+- `domain`: the domain of your SIP server, e.g. `fritz.box`
 - `username`: any valid SIP user in your Fritz!Box
 - `password`: password of your valid SIP user
 

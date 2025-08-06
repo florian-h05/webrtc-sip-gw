@@ -1,5 +1,3 @@
-version: "3.3"
-
 services:
   webrtc-sip-gw:
     container_name: webrtc-sip-gw
@@ -7,7 +5,6 @@ services:
     restart: always
     network_mode: host
     volumes:
-     - ./ssl/sipgw.key:/etc/ssl/privkey.pem:ro # Can be left out when TLS is disabled
-     - ./ssl/sipgw.crt:/etc/ssl/fullchain.pem:ro # Can be left out when TLS is disabled
+     - ./ssl:/etc/ssl/kamailio # Can be left out when TLS is disabled
     environment:
      - TLS_DISABLE=false # Optional, defaults to false
