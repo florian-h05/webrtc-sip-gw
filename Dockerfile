@@ -33,7 +33,7 @@ RUN mkdir -p /var/run/rtpengine && \
     mkdir -p /var/run/kamailio && \
     chown 1501 /var/run/kamailio
 
-HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD bash /healthcheck
+HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD sh /healthcheck
 
 ENTRYPOINT ["/entrypoint"]
 
