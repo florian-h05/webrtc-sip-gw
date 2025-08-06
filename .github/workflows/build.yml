@@ -121,7 +121,7 @@ jobs:
       # Upload report to GitHub code scanning
       - name: Analyze for critical and high CVEs
         id: docker-scout-cves
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
         uses: docker/scout-action@v1
         with:
           dockerhub-user: ${{ secrets.DOCKER_USER }}
@@ -133,7 +133,7 @@ jobs:
 
       - name: Upload SARIF result
         id: upload-sarif
-        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: sarif.output.json
