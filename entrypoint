@@ -17,14 +17,14 @@ sed -i -e "s/FILL_MY_WS_PORT/${MY_WS_PORT}/g" /etc/kamailio/kamailio.cfg
 sed -i -e "s/FILL_MY_WSS_PORT/${MY_WSS_PORT}/g" /etc/kamailio/kamailio.cfg
 
 # Allow disabling TLS by setting the TLS_DISABLE env variable to true
-if [ "$TLS_DISABLE" = true ]
+if [ "$TLS_DISABLE" = "true" ] || [ "$TLS_DISABLE" = "1" ]
 then
   sed -i -e "s/#!define WITH_TLS/##!define WITH_TLS/" /etc/kamailio/kamailio.cfg
 else
   chown 1501:1501 -R /etc/ssl/kamailio
-  chmod 655 -R /etc/ssl/kamailio
-  chmod 644 /etc/ssl/kamailio/fullchain.pem
-  chmod 600 /etc/ssl/kamailio/privkey.pem
+  chmod 755 -R /etc/ssl/kamailio
+  chmod 744 /etc/ssl/kamailio/fullchain.pem
+  chmod 700 /etc/ssl/kamailio/privkey.pem
 fi
 
 # shellcheck disable=SC2068
