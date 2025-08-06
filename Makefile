@@ -1,22 +1,39 @@
 BUILD   ?= $(shell date +%Y%m%d%H%M)
-TAG     ?= $(shell git describe --tags --abbrev=0)
+BRANCH  ?= $(shell git rev-parse --abbrev-ref HEAD)
+SHA     ?= $(shell git rev-parse --short HEAD)
 VERSION := $(TAG)-$(BUILD)
-IMAGE   := ghcr.io/florian-h05/webrtc-sip-gw
+IMAGE   := webrtc-sip-gw
+
+IP ?= $(shell hostname -I | awk '{print $$1}')
+HOSTNAME ?= $(shell hostname)
+
+# Declare targets as phony to avoid conflicts with files of the same name
+.PHONY: all build ssl run prune
 
 build:
-	docker buildx build --platform linux/amd64 -t $(IMAGE):latest -t $(IMAGE):$(VERSION) --rm --load .
+	docker build -t $(IMAGE):$(BRANCH)-$(BUILD) -t $(IMAGE):$(SHA) .
 
-push:
-	docker push $(IMAGE)
+ssl:
+	rm -rf ./ssl
+	mkdir -p ./ssl
+	openssl req -x509 -nodes -days 825 -newkey rsa:2048 \
+		-subj "/CN=$(HOSTNAME)" \
+		-addext "subjectAltName=IP:$(IP),DNS:$(HOSTNAME)" \
+		-addext "keyUsage = digitalSignature,keyEncipherment" \
+		-addext "extendedKeyUsage = serverAuth" \
+		-keyout ./ssl/privkey.pem \
+		-out ./ssl/fullchain.pem
 
-start:
-	docker compose up -d
+run:
+	docker run \
+		--name webrtc-sip-gw \
+		--network host \
+		--rm \
+		-v $(CURDIR)/ssl:/etc/ssl/kamailio \
+		-e TLS_DISABLE=false \
+		-e MY_IP=$(IP) \
+		-e MY_HOSTNAME=$(HOSTNAME) \
+		$(IMAGE):$(SHA)
 
-stop:
-	docker compose down
-
-login:
-	docker exec -it webrtc-sip-gw /bin/bash
-
-logs:
-	docker compose logs --follow
+prune:
+	docker image ls --filter=reference='webrtc-sip-gw*' -q | xargs -r docker rmi
