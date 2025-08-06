@@ -22,7 +22,7 @@ then
   sed -i -e "s/#!define WITH_TLS/##!define WITH_TLS/" /etc/kamailio/kamailio.cfg
 else
   chown kamailio:kamailio -R /etc/ssl/kamailio
-  chmod 755 -R /etc/ssl/kamailio
+  chmod 755 /etc/ssl/kamailio
   chmod 744 /etc/ssl/kamailio/fullchain.pem
   chmod 700 /etc/ssl/kamailio/privkey.pem
 fi
