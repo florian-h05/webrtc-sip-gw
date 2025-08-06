@@ -22,16 +22,16 @@ COPY ./healthcheck /healthcheck
 # Copy configuration
 COPY ./config/supervisor-rtpengine.conf /etc/supervisor/conf.d/rtpengine.conf
 COPY ./config/supervisor-kamailio.conf /etc/supervisor/conf.d/kamailio.conf
-COPY --chown=1500 ./config/rtpengine/rtpengine.conf /etc/rtpengine/rtpengine.conf
-COPY --chown=1501 ./config/kamailio/kamailio.cfg /etc/kamailio/kamailio.cfg
-COPY --chown=1501 ./config/kamailio/kamctlrc /etc/kamailio/kamctlrc
-COPY --chown=1501 ./config/kamailio/tls.cfg /etc/kamailio/tls.cfg
+COPY --chown=rtpengine:rtpengine ./config/rtpengine/rtpengine.conf /etc/rtpengine/rtpengine.conf
+COPY --chown=kamailio:kamailio ./config/kamailio/kamailio.cfg /etc/kamailio/kamailio.cfg
+COPY --chown=kamailio:kamailio ./config/kamailio/kamctlrc /etc/kamailio/kamctlrc
+COPY --chown=kamailio:kamailio ./config/kamailio/tls.cfg /etc/kamailio/tls.cfg
 
 # Create necessary directories
 RUN mkdir -p /var/run/rtpengine && \
-    chown 1500 /var/run/rtpengine && \
+    chown rtpengine:rtpengine /var/run/rtpengine && \
     mkdir -p /var/run/kamailio && \
-    chown 1501 /var/run/kamailio
+    chown kamailio:kamailio /var/run/kamailio
 
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD sh /healthcheck
 

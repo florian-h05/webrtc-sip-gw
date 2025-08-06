@@ -21,7 +21,7 @@ if [ "$TLS_DISABLE" = "true" ] || [ "$TLS_DISABLE" = "1" ]
 then
   sed -i -e "s/#!define WITH_TLS/##!define WITH_TLS/" /etc/kamailio/kamailio.cfg
 else
-  chown 1501:1501 -R /etc/ssl/kamailio
+  chown kamailio:kamailio -R /etc/ssl/kamailio
   chmod 755 -R /etc/ssl/kamailio
   chmod 744 /etc/ssl/kamailio/fullchain.pem
   chmod 700 /etc/ssl/kamailio/privkey.pem
