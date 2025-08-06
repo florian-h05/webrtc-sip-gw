@@ -19,10 +19,10 @@ Set the `MY_IP` and `MY_DOMAIN` environment variables in the `environment` secti
 
 Unless internal TLS is not explicitly disabled, TLS certificate and private key are required at these (container internal) paths:
 
-- certificate: `/etc/ssl/fullchain.pem`
-- private key: `/etc/ssl/privkey.pem`
+- certificate: `/etc/ssl/kamailio/fullchain.pem`
+- private key: `/etc/ssl/kamailio/privkey.pem`
 
-The provided [`docker-compose.yml`](docker-compose.yml) file mounts the `ssl` directory properly into the container.
+The provided [`docker-compose.yml`](docker-compose.yml) file mounts the local `ssl` directory properly into the container.
 
 ### nginx Reverse Proxy
 
@@ -32,7 +32,7 @@ Add this `location` block to a valid `server` configuration:
 
 ```
     location /sip {
-        proxy_pass                    http://FILL_YOUR_IP:8090; # Adjust to your webrtc-sip-gw Docker host's IP
+        proxy_pass                    http://FILL_YOUR_IP:8080; # Adjust to your webrtc-sip-gw Docker host's IP
         proxy_http_version            1.1;
         proxy_set_header Upgrade      $http_upgrade;
         proxy_set_header Connection   "upgrade";
