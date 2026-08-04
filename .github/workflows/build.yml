@@ -40,7 +40,7 @@ jobs:
       # pinning to SHA to mitigate possible supply chain attack
       - name: Install cosign
         if: ${{ github.event_name != 'pull_request' && github.ref_name != 'main' }}
-        uses: sigstore/cosign-installer@d58896d6a1865668819e1d91763c7751a165e159 # v3.9.2
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
         with:
           cosign-release: "v2.4.3"
 
