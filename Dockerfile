@@ -7,7 +7,7 @@ RUN useradd -u 1500 --no-create-home -s /bin/false rtpengine && \
 # Install dependencies and useful tools
 RUN \
   apt-get update && \
-  DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y supervisor nano
+  DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y supervisor nano moreutils
 
 # Install Kamailio and rtpengine
 RUN \
