@@ -6,6 +6,10 @@ This gateway allows any SIP user of your Fritz!Box to perform calls with SIP ove
 
 Please note that this very likely will also work for other SIP servers, however, we develop for and test with AVM Fritz!Box only.
 
+> [!WARNING]
+> This project is not maintained anymore as I've replaced my AVM Fritz!Box SIP server with [Asterisk](https://www.asterisk.org/), which natively supports SIP over WebSocket.
+> If you want to take over maintenance of this project, please contact me at <dev@florianhotze.com>.
+
 ## Important Information
 
 To connect to the SIP over WebSocket from mobile clients like Android & iOS, it is required that you use TLS.
